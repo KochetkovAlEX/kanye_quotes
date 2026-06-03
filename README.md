@@ -5,12 +5,12 @@ Kanye quotes is a website, where you can generate random quotes of your favourit
 ## Installation
 1. **Clone the repository**
    ```shell
-   git clone https://github.com/KochetkovAlEX/ruby-final.git
+   git clone https://github.com/KochetkovAlEX/kanye_quotes.git
    ```
 
 2. **Navigate to the project directory**
    ```shell
-   cd ruby-final
+   cd kanye_quotes
    ```
 
 3. **Install dependencies**
