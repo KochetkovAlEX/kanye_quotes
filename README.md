@@ -1,24 +1,32 @@
-# README
+# Kanye quotes
+Kanye quotes is a website, where you can generate random quotes of your favourite singer and save it in your personal list.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## Installation
+1. **Clone the repository**
+   ```shell
+   git clone https://github.com/KochetkovAlEX/ruby-final.git
+   ```
 
-* Ruby version
+2. **Navigate to the project directory**
+   ```shell
+   cd ruby-final
+   ```
 
-* System dependencies
+3. **Install dependencies**
+   ```shell
+   bundle install
+   ```
 
-* Configuration
+4. **Set up the database**
+   Create the database and run migrations to build the schema:
+   ```shell
+   bin/rails db:create
+   bin/rails db:migrate
+   ```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+5. **Start the application**
+   Launch the Rails built-in server:
+   ```shell
+   bin/rails server
+   ```
