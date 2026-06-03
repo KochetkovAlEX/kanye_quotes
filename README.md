@@ -1,10 +1,8 @@
 # Kanye quotes
------
 Kanye quotes is a website, where you can generate random quotes of your favourite singer and save it in your personal list.
 
 
 ## Installation
-----
 1. **Clone the repository**
    ```shell
    git clone https://github.com/KochetkovAlEX/ruby-final.git
