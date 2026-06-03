@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_03_081850) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_03_194349) do
   create_table "quotes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "quote_text", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.index ["user_id", "quote_text"], name: "index_quotes_on_user_id_and_quote_text", unique: true
     t.index ["user_id"], name: "index_quotes_on_user_id"
   end
 
