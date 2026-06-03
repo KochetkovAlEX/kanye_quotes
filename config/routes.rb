@@ -11,4 +11,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  root "quotes#index"
+
+  # Маршруты для создания и удаления цитат через JS
+  resources :quotes, only: [:create, :destroy]
 end
