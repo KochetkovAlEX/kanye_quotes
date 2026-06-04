@@ -24,9 +24,35 @@ Kanye quotes is a website, where you can generate random quotes of your favourit
    bin/rails db:create
    bin/rails db:migrate
    ```
+   
+5. **Tests**
+   Run tests:
+   ```shell
+   bin/rails test
+   ```
 
-5. **Start the application**
+6. **Start the application**
    Launch the Rails built-in server:
    ```shell
    bin/rails server
    ```
+
+## Preview
+
+<p align="center">
+  <img src="assets/main.png">
+</p>
+
+<p align="center">
+  <b>Main page</b>
+</p>
+
+----
+<p align="center">
+  <img width="460" height="300" src="assets/list.png">
+</p>
+
+<p align="center">
+  <b>Quote list</b>
+</p>
+
