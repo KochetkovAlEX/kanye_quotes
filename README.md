@@ -28,6 +28,7 @@ Kanye quotes is a website, where you can generate random quotes of your favourit
 5. **Tests**
    Run tests:
    ```shell
+   bin/rails db:test:prepare
    bin/rails test
    ```
 
@@ -39,6 +40,25 @@ Kanye quotes is a website, where you can generate random quotes of your favourit
 
 ## Preview
 
+<p align="center">
+  <img src="assets/login.png">
+</p>
+
+<p align="center">
+  <b>Login page</b>
+</p>
+
+-----
+
+<p align="center">
+  <img src="assets/reg.png">
+</p>
+
+<p align="center">
+  <b>Registration page</b>
+</p>
+
+-----
 <p align="center">
   <img src="assets/main.png">
 </p>
@@ -55,4 +75,3 @@ Kanye quotes is a website, where you can generate random quotes of your favourit
 <p align="center">
   <b>Quote list</b>
 </p>
-
