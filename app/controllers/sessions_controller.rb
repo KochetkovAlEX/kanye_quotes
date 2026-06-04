@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     end
   
     def create
-      user = User.find_by(email: params[:email])
+      user = User.find_by(name: params[:name])
   
       # метод authenticate сверяет хэш пароля (работает благодаря bcrypt в модели)
       if user && user.authenticate(params[:password])
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
         redirect_to root_path, notice: "Вы успешно вошли в систему!"
       else
         # Если данные неверны, показываем форму входа заново
-        flash.now[:alert] = "Неверный email или пароль."
+        flash.now[:alert] = "Неверное имя или пароль."
         render :new, status: :unprocessable_entity
       end
     end
