@@ -14,6 +14,11 @@ Rails.application.routes.draw do
 
   root "quotes#index"
 
+  get "/auth", to: "users#new", as: "auth"
+  post "/signup", to: "users#create", as: "signup"
+  post "/login",  to: "users#login_process", as: "login"
+  
+  delete "/logout", to: "users#logout", as: "logout" # Выход из аккаунта
   # Маршруты для создания и удаления цитат через JS
   resources :quotes, only: [:create, :destroy]
 end
