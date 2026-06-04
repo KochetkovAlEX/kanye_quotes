@@ -57,9 +57,3 @@ document.getElementById('quotes-list').addEventListener('click', function(e) {
   }
 });
 
-const saveButton = document.querySelector('.save-btn');
-saveButton.addEventListener('click', saveQuote());
-
-// const quotesContainer = document.querySelector('.saved-section');
-// const quotes = quotesContainer.querySelectorAll('.delete-btn');
-// quotes.forEach((quote) => quote.addEventListener('click', deleteQuote(quote)));

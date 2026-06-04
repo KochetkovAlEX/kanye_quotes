@@ -20,7 +20,7 @@
     <ul id="quotes-list" class="saved-list">
       <% @quotes.each do |quote| %>
         <li class="saved-list__item" data-id="<%= quote.id %>">
-          <span class="saved-list__text"><%= quote.text %></span>
+          <span class="saved-list__text"><%= quote.quote_text  %></span>
           <button class="delete-btn">Удалить</button>
         </li>
       <% end %>
