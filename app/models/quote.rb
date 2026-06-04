@@ -1,7 +1,7 @@
 class Quote < ApplicationRecord
   belongs_to :user
 
-  validates :text_quote, uniqueness: {
+  validates :quote_text, uniqueness: {
     scope: :user_id,
     message: "вы уже сохраняли эту фразу ранее"
   }
