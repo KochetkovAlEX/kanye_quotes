@@ -1,0 +1,27 @@
+<h1>Регистрация нового аккаунта</h1>
+
+<%= form_with model: @user, url: signup_path, local: true do |form| %>
+  <div>
+    <%= label_tag :email, "Ваш Email" %>
+    <%= email_field_tag :email %>
+  </div>
+
+  <div>
+    <%= label_tag :password, "Имя пользователя" %>
+    <%= text_field_tag :name, params[:name], required: true %>
+  </div>
+
+  <div>
+    <%= label_tag :password, "Пароль" %>
+    <%= password_field_tag :password, nil, required: true %>
+  </div>
+
+  <div>
+    <%= label_tag :password_confirmation, "Подтверждение пароля" %>
+    <%= password_field_tag :password_confirmation %>
+  </div>
+
+  <%= submit_tag "Создать аккаунт" %>
+<% end %>
+
+<p>Уже зарегистрированы? <%= link_to "Войти", login_path %></p>
