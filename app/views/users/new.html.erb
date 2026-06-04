@@ -1,21 +1,27 @@
-<h1>Вход в систему</h1>
+<h1>Регистрация нового аккаунта</h1>
 
-<% if flash[:alert] %>
-  <div class="alert alert-danger"><%= flash[:alert] %></div>
-<% end %>
-
-<%= form_with url: login_path, method: :post, local: true do |form| %>
+<%= form_with model: @user, url: signup_path, local: true do |form| %>
   <div>
-    <%= label_tag :name, 'Имя пользователя' %>
+    <%= label_tag :email, "Ваш Email" %>
+    <%= email_field_tag :email %>
+  </div>
+
+  <div>
+    <%= label_tag :password, "Имя пользователя" %>
     <%= text_field_tag :name, params[:name], required: true %>
   </div>
 
   <div>
-    <%= label_tag :password, 'Пароль' %>
+    <%= label_tag :password, "Пароль" %>
     <%= password_field_tag :password, nil, required: true %>
   </div>
 
-  <%= submit_tag 'Войти' %>
+  <div>
+    <%= label_tag :password_confirmation, "Подтверждение пароля" %>
+    <%= password_field_tag :password_confirmation %>
+  </div>
+
+  <%= submit_tag "Создать аккаунт" %>
 <% end %>
 
-<p>Нет аккаунта? <%= link_to 'Зарегистрироваться', signup_path %></p>
+<p>Уже зарегистрированы? <%= link_to "Войти", login_path %></p>

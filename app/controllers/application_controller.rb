@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless current_user
-      redirect_to auth_path, alert: "Сначала необходимо войти в аккаунт!"
+      redirect_to login_path, alert: "Сначала необходимо войти в аккаунт!"
     end
   end
 
