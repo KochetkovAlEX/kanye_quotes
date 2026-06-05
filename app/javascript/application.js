@@ -81,8 +81,11 @@ document.getElementById('quotes-list').addEventListener('click', function(e) {
         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
       }
     })
-    .then(() => li.remove()); // Удаляем из DOM
-  }
+    .then(() => {
+      li.remove(); // Удаляем из DOM
+      showMessage('Цитата удалена', false); // Уведомление об удалении
+    })
+  };
 });
 
 // Валидация пароля при регистрации
@@ -130,26 +133,3 @@ function showMessage(text, isError = true) {
   }, 2000);
 }
 
-function loadSavedQuotes() {
-  const quotesList = document.getElementById('quotes-list');
-  if (!quotesList) return;
-
-  fetch('/quotes', {
-    headers: { 'Accept': 'application/json' }
-  })
-  .then(res => res.json())
-  .then(quotes => {
-    quotesList.innerHTML = ''; // очищаем
-    quotes.forEach(quote => {
-      const li = document.createElement('li');
-      li.setAttribute('data-id', quote.id);
-      li.innerHTML = `${quote.text} <button class="delete-btn">Удалить</button>`;
-      quotesList.appendChild(li);
-    });
-  })
-  .catch(err => console.error("Ошибка загрузки списка:", err));
-}
-
-// Вызываем при загрузке страницы и при переходах Turbo
-document.addEventListener('DOMContentLoaded', loadSavedQuotes);
-document.addEventListener('turbo:load', loadSavedQuotes);
