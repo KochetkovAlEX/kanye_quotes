@@ -23,7 +23,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body data-turbo="false">
     <%= yield %>
     <div id="notification" style="position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff; padding: 10px 20px; border-radius: 5px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1000;">
       Текст уведомления

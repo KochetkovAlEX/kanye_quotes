@@ -206,13 +206,13 @@ input, button {
 .header__btn:hover,
 .save-btn:hover,
 .delete-btn:hover {
-  background-color: #e6c200;  /* чуть темнее жёлтого */
+  background-color: #e6c200;  /* чуть темнее жёлтого */ 
   transition: background-color 0.2s ease;
 }
 
-/* Для кнопки "Выход" — подчёркивание, как у ссылки "Зарегистрироваться" */
+/* Для кнопки "Выход" — подчёркивание */
 .logout__btn:hover {
   text-decoration: underline;
-  background-color: transparent; /* чтобы фон не менялся */
-  color: #ffdb4d; /* сохраняем исходный цвет текста */
+  background-color: transparent; 
+  color: #ffdb4d; 
 }
