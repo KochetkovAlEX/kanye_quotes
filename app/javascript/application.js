@@ -10,10 +10,28 @@ function updateQuote() {
   fetch('https://api.kanye.rest')
     .then(res => res.json())
     .then(res => {
-      if (res.quote) quoteElement.textContent = res.quote;
+      if (res.quote) {
+      quoteElement.textContent = res.quote;
+      // Сохраняем новую цитату в localStorage
+      localStorage.setItem('lastQuote', res.quote);
+      }
     })
     .catch(err => console.error("Ошибка загрузки цитаты:", err));
 }
+
+// Восстанавливаем сохранённую цитату при загрузке страницы
+function restoreQuote() {
+  const quoteElement = document.querySelector('.quote');
+  if (!quoteElement) return;
+  const savedQuote = localStorage.getItem('lastQuote');
+  if (savedQuote) {
+    quoteElement.textContent = savedQuote;
+  }
+}
+
+// Вызываем восстановление после загрузки DOM и после переходов Turbo
+document.addEventListener("DOMContentLoaded", restoreQuote);
+document.addEventListener("turbo:load", restoreQuote);
 
 // Кнопка "Ещё цитата" — только если она есть на странице
 const moreQuoteBtn = document.querySelector('.header__btn');
@@ -114,3 +132,4 @@ function setupValidation() {
 // Запуск валидации при загрузке страницы и при переходах Turbo
 document.addEventListener("turbo:load", setupValidation);
 document.addEventListener("DOMContentLoaded", setupValidation);
+
