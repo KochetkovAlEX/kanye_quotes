@@ -2,7 +2,7 @@
   <div class="auth-card">
     <h1 class="auth-title">Регистрация нового аккаунта</h1>
 
-    <%= form_with model: @user, url: signup_path, local: true do |form| %>
+    <%= form_with model: @user, url: signup_path, local: true, id: "signup-form" do |form| %>
       <div class="auth-form-group">
         <%= form.label :name, "Имя пользователя" %>
         <%= form.text_field :name, required: true, placeholder: 'Введите имя пользователя' %>
@@ -10,13 +10,16 @@
 
       <div class="auth-form-group">
         <%= form.label :password, "Пароль" %>
-        <%= form.password_field :password, required: true, placeholder: 'Введите пароль' %>
+        <%= form.password_field :password, required: true, placeholder: 'Введите пароль', id: "user_password" %>
       </div>
 
       <div class="auth-form-group">
         <%= form.label :password_confirmation, "Подтверждение пароля" %>
-        <%= form.password_field :password_confirmation, required: true, placeholder: 'Повторите пароль' %>
+        <%= form.password_field :password_confirmation, required: true, placeholder: 'Повторите пароль', id: "user_password_confirmation" %>
       </div>
+
+      <!-- Контейнер для сообщения об ошибке -->
+      <div id="password-error-message" style="color: red; font-size: 0.8em; margin-top: -10px; margin-bottom: 10px;"></div>
 
       <%= form.submit "Создать аккаунт", class: 'auth-btn' %>
     <% end %>
