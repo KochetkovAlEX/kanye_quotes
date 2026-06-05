@@ -34,6 +34,17 @@ button.addEventListener('click', updateQuote)
 function saveQuote() {
   const currentQuote = document.querySelector('.quote').textContent.trim();
 
+  // Проверка: есть ли уже такая цитата в списке сохранённых
+  const quotesList = document.getElementById('quotes-list');
+  if (quotesList) {
+    const existingItems = Array.from(quotesList.querySelectorAll('li'));
+    const alreadySaved = existingItems.some(li => li.firstChild.textContent.trim() === currentQuote);
+    if (alreadySaved) {
+      showMessage('Эта цитата уже сохранена', true);
+      return;
+    }
+  }
+
   fetch('/quotes', {
     method: 'POST',
     headers: {
@@ -51,6 +62,7 @@ function saveQuote() {
       li.setAttribute('data-id', data.id);
       li.innerHTML = `${currentQuote} <button class="delete-btn">Удалить</button>`;
       document.getElementById('quotes-list').appendChild(li);
+      showMessage('Цитата сохранена', false);
     }
   });
 }
@@ -105,3 +117,39 @@ function validatePassword() {
 
 document.addEventListener('DOMContentLoaded', validatePassword);
 document.addEventListener('turbo:load', validatePassword);
+
+
+function showMessage(text, isError = true) {
+  const notif = document.getElementById('notification');
+  if (!notif) return;
+  notif.textContent = text;
+  notif.style.backgroundColor = isError ? '#d9534f' : '#5cb85c';
+  notif.style.opacity = '1';
+  setTimeout(() => {
+    notif.style.opacity = '0';
+  }, 2000);
+}
+
+function loadSavedQuotes() {
+  const quotesList = document.getElementById('quotes-list');
+  if (!quotesList) return;
+
+  fetch('/quotes', {
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(res => res.json())
+  .then(quotes => {
+    quotesList.innerHTML = ''; // очищаем
+    quotes.forEach(quote => {
+      const li = document.createElement('li');
+      li.setAttribute('data-id', quote.id);
+      li.innerHTML = `${quote.text} <button class="delete-btn">Удалить</button>`;
+      quotesList.appendChild(li);
+    });
+  })
+  .catch(err => console.error("Ошибка загрузки списка:", err));
+}
+
+// Вызываем при загрузке страницы и при переходах Turbo
+document.addEventListener('DOMContentLoaded', loadSavedQuotes);
+document.addEventListener('turbo:load', loadSavedQuotes);
