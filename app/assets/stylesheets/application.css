@@ -200,3 +200,19 @@ input, button {
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+
+/* Эффекты наведения для кнопок на странице цитат */
+.header__btn:hover,
+.save-btn:hover,
+.delete-btn:hover {
+  background-color: #e6c200;  /* чуть темнее жёлтого */
+  transition: background-color 0.2s ease;
+}
+
+/* Для кнопки "Выход" — подчёркивание, как у ссылки "Зарегистрироваться" */
+.logout__btn:hover {
+  text-decoration: underline;
+  background-color: transparent; /* чтобы фон не менялся */
+  color: #ffdb4d; /* сохраняем исходный цвет текста */
+}
