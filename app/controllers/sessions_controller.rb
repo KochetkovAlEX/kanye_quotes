@@ -1,10 +1,10 @@
 class SessionsController < ApplicationController
     def new
     end
-  
+
     def create
       user = User.find_by(name: params[:name])
-  
+
       # метод authenticate сверяет хэш пароля (работает благодаря bcrypt в модели)
       if user && user.authenticate(params[:password])
         session[:user_id] = user.id # Записываем ID пользователя в куки браузера
@@ -15,9 +15,9 @@ class SessionsController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     end
-  
+
     def logout
       session[:user_id] = nil # Очищаем куки
       redirect_to login_path, notice: "Вы вышли из аккаунта."
     end
-  end
+end

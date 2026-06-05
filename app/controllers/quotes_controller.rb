@@ -23,5 +23,4 @@ class QuotesController < ApplicationController
     @quote.destroy
     head :no_content
   end
-
 end

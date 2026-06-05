@@ -22,5 +22,5 @@ Rails.application.routes.draw do
 
   delete "/logout", to: "sessions#logout", as: "logout" # Выход из аккаунта
   # Маршруты для создания и удаления цитат через JS
-  resources :quotes, only: [:create, :destroy]
+  resources :quotes, only: [ :create, :destroy ]
 end
