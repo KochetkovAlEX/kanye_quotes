@@ -2,134 +2,106 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-// ========== Функции для работы с цитатами ==========
-function updateQuote() {
+function updateQuote(){
   const quoteElement = document.querySelector('.quote');
-  if (!quoteElement) return;
 
   fetch('https://api.kanye.rest')
-    .then(res => res.json())
-    .then(res => {
-      if (res.quote) {
+  .then((res)=>{return res.json(res)})
+  .then((res)=>{
+    if (res.quote) {
       quoteElement.textContent = res.quote;
-      // Сохраняем новую цитату в localStorage
-      localStorage.setItem('lastQuote', res.quote);
-      }
-    })
-    .catch(err => console.error("Ошибка загрузки цитаты:", err));
+      localStorage.setItem('lastQuote', res.quote); // Сохраняем новую цитату в localStorage (при обновлении страницы)
+    }
+  });
 }
 
-// Восстанавливаем сохранённую цитату при загрузке страницы
+// Восстановление последней цитаты 
 function restoreQuote() {
-  const quoteElement = document.querySelector('.quote');
-  if (!quoteElement) return;
-  const savedQuote = localStorage.getItem('lastQuote');
-  if (savedQuote) {
-    quoteElement.textContent = savedQuote;
-  }
+  const quoteEl = document.querySelector('.quote');
+  if (!quoteEl) return;
+  const saved = localStorage.getItem('lastQuote');
+  if (saved) quoteEl.textContent = saved;
 }
 
-// Вызываем восстановление после загрузки DOM и после переходов Turbo
-document.addEventListener("DOMContentLoaded", restoreQuote);
-document.addEventListener("turbo:load", restoreQuote);
+document.addEventListener('DOMContentLoaded', restoreQuote);
+document.addEventListener('turbo:load', restoreQuote);
 
-// Кнопка "Ещё цитата" — только если она есть на странице
-const moreQuoteBtn = document.querySelector('.header__btn');
-if (moreQuoteBtn) {
-  moreQuoteBtn.addEventListener('click', updateQuote);
-}
+const button = document.querySelector('.header\_\_btn');
+button.addEventListener('click', updateQuote)
 
-// ========== Сохранение цитаты ==========
+
+// Функция для отправки цитаты на сервер
 function saveQuote() {
-  const quoteElement = document.querySelector('.quote');
-  if (!quoteElement) return;
-  
-  const currentQuote = quoteElement.textContent.trim();
-  if (!currentQuote) return;
+  const currentQuote = document.querySelector('.quote').textContent.trim();
 
   fetch('/quotes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      // Rails требует CSRF-токен для безопасности, его берем из head страницы
       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
     },
     body: JSON.stringify({ text: currentQuote })
   })
-    .then(res => res.json())
-    .then(data => {
-      if (data.id) {
-        const li = document.createElement('li');
-        li.setAttribute('data-id', data.id);
-        li.innerHTML = `${currentQuote} <button class="delete-btn">Удалить</button>`;
-        const quotesList = document.getElementById('quotes-list');
-        if (quotesList) quotesList.appendChild(li);
-      }
-    })
-    .catch(err => console.error("Ошибка сохранения цитаты:", err));
-}
-
-const saveBtn = document.querySelector('.save-btn');
-if (saveBtn) {
-  saveBtn.addEventListener('click', saveQuote);
-}
-
-// ========== Удаление цитаты ==========
-const quotesList = document.getElementById('quotes-list');
-if (quotesList) {
-  quotesList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('delete-btn')) {
-      const li = e.target.parentElement;
-      const quoteId = li.getAttribute('data-id');
-      if (!quoteId) return;
-
-      fetch(`/quotes/${quoteId}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-        }
-      })
-        .then(() => li.remove())
-        .catch(err => console.error("Ошибка удаления:", err));
+  .then(res => res.json())
+  .then(data => {
+    if (data.id) {
+      // Если сохранилось в БД, добавляем в список на экране
+      const li = document.createElement('li');
+      li.setAttribute('data-id', data.id);
+      li.innerHTML = `${currentQuote} <button class="delete-btn">Удалить</button>`;
+      document.getElementById('quotes-list').appendChild(li);
     }
   });
 }
 
-// ========== Валидация пароля на странице регистрации ==========
-function setupValidation() {
-  const form = document.getElementById("signup-form");
+document.querySelector('.save-btn').addEventListener('click', saveQuote);
+
+
+document.getElementById('quotes-list').addEventListener('click', function(e) {
+  if (e.target.classList.contains('delete-btn')) {
+    const li = e.target.parentElement;
+    const quoteId = li.getAttribute('data-id');
+
+    fetch(`/quotes/${quoteId}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      }
+    })
+    .then(() => li.remove()); // Удаляем из DOM
+  }
+});
+
+// Валидация пароля при регистрации
+function validatePassword() {
+  const form = document.getElementById('signup-form');
   if (!form) return;
 
-  const pass = document.getElementById("user_password");
-  const conf = document.getElementById("user_password_confirmation");
-  const err = document.getElementById("password-error-message");
-  if (!pass || !conf || !err) return;
+  const password = document.getElementById('user_password');
+  const confirm = document.getElementById('user_password_confirmation');
+  const errorDiv = document.getElementById('password-error-message');
+  if (!password || !confirm || !errorDiv) return;
 
-  function validate() {
-    if (pass.value.length > 0 && pass.value.length < 8) {
-      err.textContent = "Пароль должен содержать не менее 8 символов";
-    } else if (conf.value.length > 0 && pass.value !== conf.value) {
-      err.textContent = "Пароли не совпадают";
+  function check() {
+    if (password.value.length > 0 && password.value.length < 8) {
+      errorDiv.textContent = 'Пароль должен быть не менее 8 символов';
+    } else if (confirm.value.length > 0 && password.value !== confirm.value) {
+      errorDiv.textContent = 'Пароли не совпадают';
     } else {
-      err.textContent = "";
+      errorDiv.textContent = '';
     }
   }
 
-  // Убираем старые слушатели (если были), чтобы не дублировать
-  pass.removeEventListener("input", validate);
-  conf.removeEventListener("input", validate);
-  form.removeEventListener("submit", validate);
-
-  pass.addEventListener("input", validate);
-  conf.addEventListener("input", validate);
-  form.addEventListener("submit", (e) => {
-    if (pass.value.length < 8 || pass.value !== conf.value) {
+  password.addEventListener('input', check);
+  confirm.addEventListener('input', check);
+  form.addEventListener('submit', (e) => {
+    if (password.value.length < 8 || password.value !== confirm.value) {
       e.preventDefault();
-      validate();
+      check();
     }
   });
 }
 
-// Запуск валидации при загрузке страницы и при переходах Turbo
-document.addEventListener("turbo:load", setupValidation);
-document.addEventListener("DOMContentLoaded", setupValidation);
-
+document.addEventListener('DOMContentLoaded', validatePassword);
+document.addEventListener('turbo:load', validatePassword);
