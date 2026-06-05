@@ -5,7 +5,7 @@ class SessionControllerTest < ActionDispatch::IntegrationTest
     @user = User.create(name: "user", password: "password", password_confirmation: "password")
   end
 
-  test "login check" do
+  test "login form" do
     get login_path
     assert_response :success
   end
